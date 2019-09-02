@@ -36,36 +36,40 @@ class Agente_reactivo_simple:
         return
     #def prespective(self,env):
     def think(self):
-
-        while(self.env.accept_action()):
-
-
-
+        print("cantidad de suciedad",self.env.getAmount())
+        while(self.env.accept_action(self.puntos)):
+            if (self.env.if_dirty()):
+                print("clean")
+                self.suck()
             if(self.env.init_posX == self.env.sizeX -1 and self.env.init_posY == self.env.sizeY  - 1 ):## Si termine el juego
-
                 print("Limpieza finalizada")
                 print("Se limpio ",self.puntos," de ",self.env.getAmount() , " de suciedad")
                 print("Se utilizaron" , self.env.vidas," vidas")
                 break
             if(self.env.init_posX  % 2 == 0 and self.env.init_posY != self.env.sizeY - 1 ):# par y extremo derecho
+                self.env.map[self.env.init_posX][self.env.init_posY] = "*"
                 print("derecha")
                 self.right()
+
             elif(self.env.init_posX % 2 == 0 and self.env.init_posY == self.env.sizeY - 1):#par y fondo
+                self.env.map[self.env.init_posX][self.env.init_posY] = "*"
                 print("down")
                 self.down()
+
             elif(self.env.init_posX % 2 != 0 and self.env.init_posY == 0 and self.env.init_posX != self.env.sizeX - 1):#impar y extremo izquierdo
+                self.env.map[self.env.init_posX][self.env.init_posY] = "*"
                 print("down")
                 self.down()
+
             elif(self.env.init_posX %2 != 0  and self.env.init_posX == self.env.sizeX -1 ):
+                self.env.map[self.env.init_posX][self.env.init_posY] = "*"
                 print("right")
                 self.right()
+
             else:
+                self.env.map[self.env.init_posX][self.env.init_posY] = "*"
                 print("left")
                 self.left()
-
-            if (self.env.if_dirty()):
-                print("clean")
-                self.suck()
             self.env.print_enviroment()
-e = Enviroment(9,9,3,5,0.5)
+e = Enviroment(128,128,0,0,0.8)
 a = Agente_reactivo_simple(e)

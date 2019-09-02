@@ -9,9 +9,9 @@ class Enviroment:
         # markdown acordarse
         self.sizeX = sizeX
         self.sizeY = sizeY
-        random.seed(30)
+        random.seed(20)
         self.init_posX = random.randint(0, sizeX - 1)
-        random.seed(30)
+        random.seed(20)
         self.init_posY = random.randint(0, sizeY - 1)
         self.dirt_rate = dirt_rate
         self.amount_dirty = 0
@@ -45,8 +45,11 @@ class Enviroment:
     def getAmount(self):
         return self.amount_dirty
 
-    def accept_action(self):
+    def accept_action(self,puntos):
         if(self.vidas == 1000):
+            print("Limpieza finalizada")
+            print("Se limpio ", puntos, " de ", self.getAmount(), " de suciedad")
+            print("Se utilizaron", self.vidas, " vidas")
             return False
         else:
             self.vidas+= 1
@@ -62,7 +65,6 @@ class Enviroment:
     def getVidas(self):
         return self.vidas
     def print_enviroment(self):
-        self.map[self.init_posX][self.init_posY] = "*"
         print("----------------------------------------------")
         print("----------------------------------------------")
         for i in range(self.sizeX):
