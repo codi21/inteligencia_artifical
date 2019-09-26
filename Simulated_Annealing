@@ -1,0 +1,127 @@
+import math
+import random
+
+
+
+def amenazas(pos_x,pos_y,vec): ## dada una pos y un vector , contabilizo la cant de amenazas
+    point=0
+    for i in range(len(vec)):
+        if(i != pos_y or vec[i] != pos_x):
+            if(math.fabs(pos_y- i ) == math.fabs(pos_x - vec[i])):
+                point+=1
+            if(i == pos_y):
+                point+=1
+            if(pos_x == vec[i]):
+                point+=1
+    return point
+def printMatriz(m):
+    for i in range(len (m)):
+        print("[",end="")
+        for j in range(len(m)):
+            print(m[i][j], end=",")
+        print("]")
+        print("\n")
+
+
+
+def minimo_matriz(matriz,step):#Busca el min de la matriz para proceder a hacer el movimiento de la ficha
+    min=matriz[0][0]
+    indice=(0,0)
+    for i in range(len(matriz)):
+        for j in range(len(matriz)):
+            if(matriz[i][j]< min ):
+                min = matriz[i][j]
+                indice=(i,j)
+
+    if(step != 0):
+        matriz[indice[0]][indice[1]] =1000
+
+    return indice
+def heuristica(state): ## Devuelve un mejor estado haciendo un solo movimiento
+    matriz=[[None] * len (state) for i in range(len(state))]
+    for i in range(len(state)): ## Coloco 1000 donde estan ubicadas las fichas
+        matriz[state[i]][i] = 1000
+    state_copy = state.copy()
+    for i in range (len(state)): ## Voy colocando la cantidad de amenazas que tienen las fichas dado un supuesto movimiento
+        for j in range(len(state)):
+            if(matriz[i][j] != 1000):
+                state[i] = j
+                matriz[i][j] = sumas_amenazas(state)
+            state = state_copy.copy()
+    state = state_copy
+
+    count = len(matriz)*len(matriz)
+    states = []
+    while(count > 0 ):
+        x = minimo_matriz(matriz, count )
+        state[x[1]]=x[0] ## realizo el movimiento de ficha
+        count -= 1
+        states.append(state)
+        state = state_copy.copy()
+
+    return states  ## Devuelvo el nuevo estado
+
+def sumas_amenazas(vec):## cantidad de amenazas de cada estado
+    sum = 0
+    for i in range(len(vec)):
+        sum+=amenazas(vec[i],i,vec)
+    return sum
+
+def simulated_annealing(n): ## Recibimos el tamaño del tablero
+    ##Definiendo current state
+    current_state=[]
+    for i in range(n):
+        current_state.append(random.randint(0,n-1))
+    goal_state = False
+    movements = 0
+    ## Loop hasta que encuentre el estado ideal (en mi caso que la cantidad de amenzas de cada reina sea = a 0)
+    ## o llegue al limite de movimientos osea = a 1000
+    current_state2 =[]
+    step = 0#variable que avisa que stado menor se ha elegido
+    while(goal_state == False and movements < 10000 ):
+        if(sumas_amenazas(current_state) == 0):
+            return current_state
+        current_state2 = current_state.copy()
+
+        next_state = heuristica(current_state)
+
+        print("movements ",movements)
+
+
+
+        movements += 1
+        sol = False
+        sols = 0
+        while sol == False:
+            delta_e = sumas_amenazas(next_state[sols]) - sumas_amenazas(current_state2)
+            print("entra", current_state2, "con ", sumas_amenazas(current_state2))
+            print("sale ", next_state[sols], "con ", sumas_amenazas(next_state[sols]))
+            print("el next es ",next_state[sols],"el current es ",current_state2)
+            print("delta _ e",delta_e)
+            print("sols vale")
+            if delta_e < 0 :
+                print("Encontre un mejor estado porque")
+                current_state = next_state[sols]
+                sol = True
+                sols=0
+                break
+            else :
+
+                if math.exp(delta_e/movements) > random.randint(0,1) :
+                    print("lo vamos a probar con tal probabilidad")
+                    current_state = next_state[sols]
+                    sols+=1
+                    movements+=1
+
+                else :
+                    print("voy a tener que usar otra solucion")
+                    sols+=1
+
+            if sols == len(current_state)*len(current_state) :
+                for i in range(n):
+                    current_state[i]=random.randint(0, n - 1)
+                sol=True
+    return current_state ##Devuelvo el mejor estado encontrado
+
+b = simulated_annealing(8)
+print("la lista encontrada posee las siguientes amenazas",sumas_amenazas(b))
