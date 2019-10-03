@@ -1,0 +1,78 @@
+import random
+import math
+def cant_amenazas(vec):
+    point = 0
+    for i in range (len(vec)):
+        j = 0
+        while(j < len(vec)):
+            if i != j :
+                if (math.fabs(i - j) == math.fabs(vec[i] - vec[j])):
+                    point += 1
+
+            j+=1
+    return point
+def tablero_random(n):
+    current_state = []
+    for i in range(n):
+        current_state.append(-1)
+    j = 0
+    while (j < n):
+        ran = random.randint(0, n - 1)
+        if current_state[ran] == -1:
+            current_state[ran] = j
+            j += 1
+    return current_state
+
+def show_tablero(vec):
+    for i in range(len(vec)):
+        for j in range(len(vec)):
+            if j == vec[i]:
+
+                print("| @ |" ,end="")
+
+            else:
+                if j % 2 == 0 :
+                    print("|___|",end="")
+                else:
+                    print("| ■ |",end="")
+        print("")
+
+
+def probabilidad (delta_e , t):
+
+    return math.pow(math.e,delta_e/t)
+
+
+def temple_simulated (n):
+
+    current = tablero_random(n)
+    print("el tablero inicial es ",current)
+    for t in range(1000 ,0,-1):
+
+        if cant_amenazas(current) == 0 :
+            return current
+        x = random.randint(0,len(current)-1)
+        print("posicion que voy a cambiar ", x)
+        y = random.randint(0, len(current) - 1)
+        print("por la posicion y",y)
+        current2 = current.copy()
+        aux = current[x]
+        current[x] = current[y]
+        current[y] = aux
+        print("desp del cambio el vector queda",current)
+        print("y el anterior vector era ",current2)
+        delta_e = cant_amenazas(current) - cant_amenazas(current2)
+        print("el delta_e es igual a ",delta_e)
+        if delta_e < 0 :
+            print("es mejor el vector que encontre")
+            continue
+        else :
+            print("es peor pero vamos a aceptarlo con una probabilidad")
+            if probabilidad(delta_e,t) < random.randint(0,1):
+                continue
+            else:
+                t+=1
+    return current
+vec = temple_simulated(8)
+show_tablero(vec)
+print("el vector encontrado es ",vec ,"con las siguientes amenazas",cant_amenazas(vec))
