@@ -1,0 +1,43 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+El número (porcentaje) de veces que se llega a un estado solución óptimo.
+```{r}
+library("readr")
+data<-read_delim("~/Desktop/Estadisticas de los algoritmos - Estadisticas de los algoritmos (1).csv",delim = ';')
+library("dplyr")
+library("ggplot2")
+data
+data%>%group_by(Metodo)%>%summarise(Exito = sum(`Solucion final`== 0))
+```
+El tiempo de ejecución promedio y la desviación estándar para encontrar dicha solución. (se puede usar la función time.time() de python)
+```{r}
+data%>%group_by(Metodo)%>%summarise(Promedio=mean(Tiempo),DesviacionEstandar=sd(Tiempo))
+```
+La cantidad de estados previos promedio y su desviación estándar por los que tuvo que pasar para llegar a una solución.
+```{r}
+data%>%group_by(Metodo)%>%summarise(Promedio=mean(Pasos),DesviacionEstandar=sd(Pasos))
+
+```
+Realizar un gráfico de cajas (boxplot) que muestre la distribución de los tiempos de ejecución de cada algoritmo. (ver gráfico de ejemplo)
+```{r}
+data%>%ggplot()+
+  geom_boxplot(aes(x = Metodo,y=Tiempo,fill=Metodo))
+```
+
+```{r}
+data%>%ggplot()+
+  geom_point(aes(x=Ejecucion,y=Tiempo))+
+  facet_wrap(~Metodo )
+```
+Para cada uno de los algoritmos, Graficar la variación  de la función h() a lo largo de las iteraciones. (Considerar solo una ejecución en particular)
+```{r}
+
+data%>%ggplot()+
+  geom_point(aes(x = Metodo , y = Pasos))
+```
+
+ Indicar según su criterio, cuál de los tres algoritmos implementados resulta más adecuado para la solución del problema de las n-reinas.
+ 
+  Sujeto a una implementación propia , el algoritmo con mejor resultado teniendo en cuentas las variables de tiempo de ejecución y veces que llego a la solución es el 'HILL CLIMBING'. 
