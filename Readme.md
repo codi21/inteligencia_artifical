@@ -1,9 +1,9 @@
 # Agentes Racionales
 
-## ImplementaciÛn de agente racional reactivo.
-> El agente racional reactivo implementado en python , su mÈtodo principal (think) , est· guiado seg˙n la localizaciÛn del mismo.
-> …ste se mueve hacia la derecha o izquierda seg˙n si la fila en el que se encuentra es par Û impar.
-> AsÌ mismo el otro agente solicitado en el trabajo pr·ctico se mueve aleatoriamente seg˙n el valor arrojado por la funciÛn randomint.
+## Implementaci√≥n de agente racional reactivo.
+> El agente racional reactivo implementado en python , su m√©todo principal (think) , est√° guiado seg√∫n la localizaci√≥n del mismo.
+> √âste se mueve hacia la derecha o izquierda seg√∫n si la fila en el que se encuentra es par √≥ impar.
+> As√≠ mismo el otro agente solicitado en el trabajo pr√°ctico se mueve aleatoriamente seg√∫n el valor arrojado por la funci√≥n randomint.
 
 ## Evaluacion de resultados
 ### Agente reflexivo simple con think configurado
@@ -22,18 +22,23 @@
 | %40                             | 2/2 | 6/6   | 26/27 | 87/102  | 131/410 | 90/1738  | 161/6554  |
 | %80                             | 3/3 | 13/13 | 51/51 | 160/206 | 128/819 | 226/3277 | 338/13107 |
 
->2.9
->a)En el caso que se penalizara al agente por cada vez que haga un movimiento , Èste serÌa irracional(Agente reflexivo simple)
->porque eso no le impediria volver a recorrer caminos ya vistos anteriormente.
->b)Para un agente con estado seria racional, ya que sabrÌa que caminos recorrio previamente.
->c)Si ya que poseerÌa conocimiento del medio en el que se va a mover. Bajo la medida de rendimiente que se propone
->Èste va a elegir la mejor opciÛn seg˙n donde estÈ parado.
+2.9
+a)En el caso que se penalizara al agente por cada vez que haga un movimiento , √©ste ser√≠a irracional(Agente reflexivo simple)
+porque eso no le impediria volver a recorrer caminos ya vistos anteriormente.
 
->2.10
->a) Un agente reactivo simple en el caso de estar en un medio totalmente desconocido serÌa muy irracional porque no sabrÌa como
->actuar frente a determinados obstaculos Û limites del mapa.
->b)Seg˙n la medida de rendimiento propuesta. Por ejemplo en el caso que implemente yo un agente aleatorio para matrices pequeÒas
->no dejaba suciedad pero ocupaba todos los periodos de vida. Y para el caso en el que le configure patrones a seguir este obtuvo mejores
->resultados en matrices grandes.
->c)En los experimentos realizados tras analizar los valores cabe destacar que el agente aleatorio en matrices grandes limpiÛ demasiado poco.
->d)Si ya que sabrÌa porque posiciones ya ha pasado.
+b)Para un agente con estado seria racional, ya que sabr√≠a que caminos recorrio previamente.
+
+c)Si ya que poseer√≠a conocimiento del medio en el que se va a mover. Bajo la medida de rendimiente que se propone
+√©ste va a elegir la mejor opci√≥n seg√∫n donde est√© parado.
+
+2.10
+a) Un agente reactivo simple en el caso de estar en un medio totalmente desconocido ser√≠a muy irracional porque no sabr√≠a como
+actuar frente a determinados obstaculos √≥ limites del mapa.
+
+b)Seg√∫n la medida de rendimiento propuesta. Por ejemplo en el caso que implemente yo un agente aleatorio para matrices peque√±as
+no dejaba suciedad pero ocupaba todos los periodos de vida. Y para el caso en el que le configure patrones a seguir este obtuvo mejores
+resultados en matrices grandes.
+
+c)En los experimentos realizados tras analizar los valores cabe destacar que el agente aleatorio en matrices grandes limpi√≥ demasiado poco.
+
+d)Si ya que sabr√≠a porque posiciones ya ha pasado.
